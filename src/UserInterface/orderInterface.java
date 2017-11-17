@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  * @author law
  */
 public class orderInterface extends javax.swing.JFrame {
-
+    
     String [] [] mcd = new String [][]{
         {"Chicken Burger","Food","4.00",""},
         {"Fish Burger","Food","5.00",""},
@@ -253,6 +253,7 @@ public class orderInterface extends javax.swing.JFrame {
             orderTable.addRow(row);
             grandtotal  = grandtotal + (quan* price);
             total.setText(""+grandtotal);
+            System.out.print("Try");
         }
         else{
             

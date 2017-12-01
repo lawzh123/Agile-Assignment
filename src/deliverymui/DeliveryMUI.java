@@ -5,6 +5,7 @@
  */
 package deliverymui;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.*;
 
 /**
@@ -202,12 +203,18 @@ public class DeliveryMUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         DefaultTableModel model = (DefaultTableModel)abctable.getModel();
-        model.addRow(new Object []{jTextField1.getText().toString(),jTextField2.getText().toString(),jTextField3.getText().toString(),jTextArea1.getText().toString(),"pending"} );
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to add?","Confirm",JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                model.addRow(new Object []{jTextField1.getText().toString(),jTextField2.getText().toString(),jTextField3.getText().toString(),jTextArea1.getText().toString(),"pending"} );
+             
+                jTextField1.setText(null);
+                jTextField2.setText(null);
+                jTextField3.setText(null);
+                jTextArea1.setText(null);
+                
+                JOptionPane.showMessageDialog(null, "Information added", "Added", JOptionPane.INFORMATION_MESSAGE);
+            } 
         
-        jTextField1.setText(null);
-        jTextField2.setText(null);
-        jTextField3.setText(null);
-        jTextArea1.setText(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void abctableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abctableMouseClicked
@@ -228,27 +235,45 @@ public class DeliveryMUI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel)abctable.getModel();
-            model.setValueAt(jTextField1.getText(), abctable.getSelectedRow(),0);
-            model.setValueAt(jTextField2.getText(), abctable.getSelectedRow(),1);
-            model.setValueAt(jTextField3.getText(), abctable.getSelectedRow(),2);
-            model.setValueAt(jTextArea1.getText(), abctable.getSelectedRow(),3);
+        
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to update?","Confirm",JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                model.setValueAt(jTextField1.getText(), abctable.getSelectedRow(),0);
+                model.setValueAt(jTextField2.getText(), abctable.getSelectedRow(),1);
+                model.setValueAt(jTextField3.getText(), abctable.getSelectedRow(),2);
+                model.setValueAt(jTextArea1.getText(), abctable.getSelectedRow(),3);
+    
+                jTextField1.setText(null);
+                jTextField2.setText(null);
+                jTextField3.setText(null);
+                jTextArea1.setText(null);
+                
+                 JOptionPane.showMessageDialog(null, "Information Updated", "Updated", JOptionPane.INFORMATION_MESSAGE);
+            }
             
-        jTextField1.setText(null);
-        jTextField2.setText(null);
-        jTextField3.setText(null);
-        jTextArea1.setText(null);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int index = abctable.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel)abctable.getModel();
-        model.removeRow(index);
         
-        jTextField1.setText(null);
-        jTextField2.setText(null);
-        jTextField3.setText(null);
-        jTextArea1.setText(null);
+        if((model.getValueAt(index, 4).toString()).equals("resigned")){    
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to delete?","Confirm",JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                model.removeRow(index);     
+                jTextField1.setText(null);
+                jTextField2.setText(null);
+                jTextField3.setText(null);
+                jTextArea1.setText(null);
+                
+                JOptionPane.showMessageDialog(null, "Information deleted", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Delivery not yet resigned", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

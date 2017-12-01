@@ -5,6 +5,7 @@
  */
 package UserInterface;
 
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -64,6 +65,7 @@ public class orderInterface extends javax.swing.JFrame {
         total = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Order");
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel4.setText("Order");
@@ -88,7 +90,7 @@ public class orderInterface extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -253,7 +255,7 @@ public class orderInterface extends javax.swing.JFrame {
             orderTable.addRow(row);
             grandtotal  = grandtotal + (quan* price);
             total.setText(""+grandtotal);
-            System.out.print("Try");
+            //System.out.print("Try");
         }
         else{
             
@@ -303,12 +305,18 @@ public class orderInterface extends javax.swing.JFrame {
 
     private void table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table2MouseClicked
         if(evt.getClickCount()==2){
-            DefaultTableModel orderTable = (DefaultTableModel)table2.getModel();
+            int choice = JOptionPane.showConfirmDialog(null,"Confirmation of Cacellation of order","Confirm cancel this food ?",JOptionPane.WARNING_MESSAGE);
+            if(choice==0){
+                DefaultTableModel orderTable = (DefaultTableModel)table2.getModel();
             
-            double price = Double.parseDouble(table2.getModel().getValueAt(table2.getSelectedRow(), 3).toString());
-            grandtotal = grandtotal - price;
-            total.setText(""+grandtotal);
-            orderTable.removeRow(table2.getSelectedRow());
+                double price = Double.parseDouble(table2.getModel().getValueAt(table2.getSelectedRow(), 3).toString());
+                grandtotal = grandtotal - price;
+                total.setText(""+grandtotal);
+                orderTable.removeRow(table2.getSelectedRow());
+            }
+            else{
+                
+            }
         }
         else{
             
@@ -321,7 +329,46 @@ public class orderInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(null, "This one is still under construction","GG.com",JOptionPane.WARNING_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(null,"Confirm proceed to payment?","Confirmation of proceed to payment",JOptionPane.WARNING_MESSAGE);
+        if(choice ==0){
+            paymentInterface payment = new paymentInterface();
+            
+            payment.setVisible(true);
+           
+            DefaultTableModel orderTable = (DefaultTableModel)table2.getModel();
+            //orderClass [] order = null;
+            String name = "";
+            String quantity = "";
+            String unitPrice = "";
+            String subtotal = "";
+            String grandTotal = "";
+               
+            for(int i=0; i<orderTable.getRowCount();i++){
+               
+               /*1order[i].setName(orderTable.getValueAt(i, 0).toString());
+               order[i].setType(orderTable.getValueAt(i, 1).toString());
+               order[i].setUnitPrice(orderTable.getValueAt(i, 2).toString());
+               order[i].setRemark(orderTable.getValueAt(i, 3).toString());
+               */
+               name = name+orderTable.getValueAt(i, 0)+ "\n";
+               quantity += "X "+orderTable.getValueAt(i, 2)+ "\n";
+               unitPrice += "RM"+orderTable.getValueAt(i, 1)+ "\n";
+               subtotal +="RM"+orderTable.getValueAt(i, 3)+ "\n";
+               
+           }
+           payment.name.setText("<html>" + name.replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
+           payment.quantity.setText("<html>" + quantity.replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
+           payment.unitPrice.setText("<html>" + unitPrice.replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
+           payment.total.setText("<html>" + subtotal.replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
+           payment.grandTotal.setText("RM " + total.getText());
+           
+           //System.out.print();
+           this.dispose();
+        }
+        else{
+            //do nothing 
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

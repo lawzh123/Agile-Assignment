@@ -218,7 +218,7 @@ public class DeliveryMUI extends javax.swing.JFrame {
         String ic = model.getValueAt(index, 1).toString();
         String contact = model.getValueAt(index, 2).toString();
         String address = model.getValueAt(index, 3).toString();
-
+        
         jTextField1.setText(name);
         jTextField2.setText(ic);
         jTextField3.setText(contact);

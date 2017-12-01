@@ -1,6 +1,6 @@
 package UI;
 
-import Models.RegisterRestaurant;
+import Object.RegisterRestaurant;
 import javax.swing.SwingConstants;
 import javax.swing.JOptionPane;
 

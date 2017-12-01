@@ -48,16 +48,16 @@ public class CheckStatus extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Ali", "Delivering", "Deen Mamak", "00:45:00"},
-                {"Ah Kaw", "Available", null, null},
-                {"Muthu", "Break", null, null}
+                {"Ali", "Delivering", "Deen Mamak"},
+                {"Ah Kaw", "Delivering", "Mcd"},
+                {"Muthu", "Break", null}
             },
             new String [] {
-                "Name", "Status", "Location", "Time"
+                "Name", "Status", "Location"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -102,16 +102,16 @@ public class CheckStatus extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(289, 289, 289)
+                        .addGap(290, 290, 290)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

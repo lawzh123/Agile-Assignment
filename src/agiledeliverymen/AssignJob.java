@@ -5,7 +5,13 @@
  */
 package agiledeliverymen;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,15 +23,24 @@ public class AssignJob extends javax.swing.JFrame {
     /**
      * Creates new form AJ
      */
+    String host = "jdbc:derby://localhost:1527/AgileDB";
+    String user = "nbuser";
+    String password = "nbuser";
+    String tableName = "DeliveryMen";
+    Connection conn = null;
+    PreparedStatement stmt;
+
     public AssignJob() {
         initComponents();
-                new Thread(new Runnable(){
-            public void run(){
-                try{
+        new Thread(new Runnable() {
+            public void run() {
+                try {
                     updateTime();
-                    }catch (Exception ie){}
+                } catch (Exception ie) {
                 }
+            }
         }).start();
+
     }
 
     /**
@@ -37,49 +52,51 @@ public class AssignJob extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        CBJob = new javax.swing.JComboBox<>();
+        CBMan = new javax.swing.JComboBox<>();
+        buttonConfirm = new javax.swing.JButton();
+        buttonCancel = new javax.swing.JButton();
         Time = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deen Mamak", "Mcd", "KFC" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(100, 50));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        CBJob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mcd", "Deen Mamak", "KFC" }));
+        CBJob.setPreferredSize(new java.awt.Dimension(100, 50));
+        CBJob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                CBJobActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ah Kaw" }));
-        jComboBox2.setPreferredSize(new java.awt.Dimension(100, 50));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        CBMan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ah Kaw" }));
+        CBMan.setPreferredSize(new java.awt.Dimension(100, 50));
+        CBMan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                CBManActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Confirm");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 35));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonConfirm.setText("Confirm");
+        buttonConfirm.setPreferredSize(new java.awt.Dimension(100, 35));
+        buttonConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonConfirmActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancel");
-        jButton2.setPreferredSize(new java.awt.Dimension(100, 35));
+        buttonCancel.setText("Cancel");
+        buttonCancel.setPreferredSize(new java.awt.Dimension(100, 35));
 
         Time.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         Time.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Time.setText("Time");
         Time.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Time.setPreferredSize(new java.awt.Dimension(200, 30));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Assigning Job");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -90,60 +107,74 @@ public class AssignJob extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(227, 227, 227)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
-                .addComponent(Time, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(237, 237, 237)
+                .addGap(268, 268, 268)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(363, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(buttonConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CBJob, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CBMan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addComponent(Time, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(49, 49, 49))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(CBMan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CBJob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Time, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(313, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(50, 50, 50)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(519, Short.MAX_VALUE)))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void CBJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBJobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_CBJobActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void CBManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBManActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_CBManActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        JOptionPane.showMessageDialog(null,jComboBox1.getSelectedItem().toString()+" delivery assgined to "+jComboBox2.getSelectedItem().toString(),null,JOptionPane.INFORMATION_MESSAGE); 
+    private void buttonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfirmActionPerformed
+//         TODO add your handling code here:
+        DeliveryMen deliverymen = new DeliveryMen(CBMan.getSelectedItem().toString(), "Delivering", CBJob.getSelectedItem().toString());
+
+        try {
+            conn = DriverManager.getConnection(host, user, password);
+            stmt = conn.prepareStatement("INSERT INTO " + tableName + " VALUES(?,?,?)");
+            stmt.setString(1, deliverymen.getName());
+            stmt.setString(2, deliverymen.getStatus());
+            stmt.setString(3, deliverymen.getLocation());
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, CBJob.getSelectedItem().toString() + " delivery job assgined to " + CBMan.getSelectedItem().toString(), null, JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
         new CheckStatus().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_buttonConfirmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,23 +211,26 @@ public class AssignJob extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void updateTime(){
-        try{
-            while(true){
+
+    public void updateTime() {
+        try {
+            while (true) {
                 Time.setText(new SimpleDateFormat("E hh:mm:ss a").format(new java.util.Date()));
                 Thread.currentThread().sleep(1000);
-                }
-            }catch (Exception e){
-                System.out.println("Exception in Thread Sleep : "+e);
-                }
-    }        
+            }
+        } catch (Exception e) {
+            System.out.println("Exception in Thread Sleep : " + e);
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CBJob;
+    private javax.swing.JComboBox<String> CBMan;
     private javax.swing.JLabel Time;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton buttonCancel;
+    private javax.swing.JButton buttonConfirm;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

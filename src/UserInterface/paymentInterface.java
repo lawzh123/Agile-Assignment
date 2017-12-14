@@ -445,7 +445,7 @@ public class paymentInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int choice = JOptionPane.showConfirmDialog(null, "Confirm Pay ? ","Confimation of Payment",JOptionPane.WARNING_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(null, "Confirm Pay Your Bill ? ","Confimation of Payment",JOptionPane.WARNING_MESSAGE);
         if(choice ==0){
             JOptionPane.showMessageDialog(null, "Payment Sucessfully!");
             dispose();

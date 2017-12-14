@@ -18,15 +18,17 @@ public class DeliveryMUI extends javax.swing.JFrame {
      * Creates new form DeliveryMUI
      */
     String [] [] dm = new String [] []{
-        {"EDWIN","920802059874","0123456789","abc123","resigned"} ,
-        {"KM","920802059875","0123456789","abc123","resigned"} ,
-        {"ZH","920802059876","0123456789","abc123","resigned"} ,
-        {"CHUCKIE","920802059877","0123456789","abc123","pending"} ,
-        {"YUN","920802059878","0123456789","abc123","pending"} 
+        {"EDWIN","920802059874","0123456789","abc123","resigned","resigned","trauc"} ,
+        {"KM","920802059875","0123456789","qwe123","resigned","resigned","taruc"} ,
+        {"ZH","920802059876","0123456789","abc123","resigned","pending","taruc"} ,
+        {"CHUCKIE","920802059877","0123456789","abc123","matriculate","delivery","pv13"} ,
+        {"YUN","920802059878","0123456789","qwe123","matriculate","delivery","pv10"}, 
+        {"JIAN","920802059878","0123456789","123qwe","matriculate","pending","pv10"} 
     } ;
+    String job,loca,status = null;
     
      public void showDm(){
-        Object [] row = new Object [5];
+        Object [] row = new Object [20];
         DefaultTableModel model = (DefaultTableModel)abctable.getModel();
         for(int i = 0 ; i < dm.length;i++){
             row[0] = dm [i][0];
@@ -34,6 +36,8 @@ public class DeliveryMUI extends javax.swing.JFrame {
             row[2] = dm [i][2];
             row[3] = dm [i][3];
             row[4] = dm [i][4];
+            row[5] = dm [i][5];
+            row[6] = dm [i][6];
             model.addRow(row);
         }
     }
@@ -70,6 +74,7 @@ public class DeliveryMUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         abctable = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(700, 500));
@@ -129,6 +134,13 @@ public class DeliveryMUI extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("JobStatus");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,7 +174,9 @@ public class DeliveryMUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton3)
+                        .addGap(113, 113, 113)
+                        .addComponent(jButton4)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -193,7 +207,8 @@ public class DeliveryMUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap(260, Short.MAX_VALUE))
         );
 
@@ -276,6 +291,20 @@ public class DeliveryMUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String name = jTextField1.getText();
+        status = "matriculate";
+        Object [] row = new Object [20];
+        for(int i = 0 ; i < dm.length;i++){  
+            if((row[0] = dm [i][0]).equals(name) && (row[4] = dm[i][4]).equals(status)){       
+                job = dm [i][5];
+                loca = dm [i][6];
+                new DeliveryStatus(name,job,loca).setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,6 +345,7 @@ public class DeliveryMUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

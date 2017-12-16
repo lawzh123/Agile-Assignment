@@ -5,8 +5,8 @@
  */
 package UI;
 
+import Object.RegisterRestaurant;
 import javax.swing.SwingConstants;
-import Models.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
